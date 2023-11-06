@@ -1,3 +1,19 @@
+# Contents
+
+- [Introduction](#introduction)
+- [Sequential Programs](#sequential-programs)
+    - [Property-Based Testing](#property-based-testing)
+    - [Diffing](#diffing)
+    - [Slicing](#slicing)
+    - [Module Path](#module-path)
+    - [Type Inference](#type-inference)
+    - [IO](#io)
+- [Parallel Programs](#parallel-programs)
+    - [Parse Transform](#parse-transform)
+    - [Comparison of Messages](#comparison-of-messages)
+- [Results](#results)
+- [References](#references)
+
 # Introduction
 
 # Sequential Programs
