@@ -59,11 +59,20 @@ We use a working implementation of success typing called *Typer*, which can work
 
 ## IO
 
-- Erlang message-passing
+Up until now, we were only considering the equivalence of programs without side-effects.
+Although Erlang is considered as a functional language, nothing stops the user from reading from, or writing to the standard output, to the disk, or to some socket.
+Apart from some special cases, IO is allowed anywhere in Erlang programs, and there are generally no indications, either conventional (like function names ending in '!' for lisps), or forced by the compiler (like monadic IO in languages like Haskell), that a given function has side-effects.
+To extend the notion of equivalence to include side-effects, we can keep track of any effects that a spcefic function had on its execution environment, while still taking note of the value it returned.
+To check if the two functions are equivalent, we compare the effects, together with the return value.
+
+Because we cannot know beforehand if a function will do IO when evaluated, we have to treat every function as one that can potentially have side-effects, and observe these effects for the purposes of checking the equivalence.
+
 - Group leader
 - Catching IO
 
 # Parallel Programs
+
+- Erlang message-passing
 
 ## Parse Transform
 
