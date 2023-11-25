@@ -33,8 +33,12 @@ Evaluating the whole application after each refactoring would take a considerabl
 This problem is painfully obvious when the refactoring has only affected a very small portion of the codebase (e.g.: renaming some local variable).
 Such localised changes shouldn't require the execution of the whole application.
 
+There is also another, more fundamental problem with this naive approach, namely the possibility of non-terminating programs.
+Erlang is not a total language, and most erlang applications are non-terminating programs, like web or telecommunication services.
 While it's possible to have a notion of equivalence of functions that do not terminate, due to erlang's ability to have uncontrolled side-effects, we are only considering functions that do in fact terminate, and we also have a constraint on the time it can take before we stop its evaluation.
 
+To avoid these problems, we need some other, more principled way to separate the parts of the program that were effected by the refactoring, and focus only on these.
+In the literature, this is called *program slicing*.
 
 - Caller/callee
 - Function interface
