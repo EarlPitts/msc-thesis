@@ -16,10 +16,32 @@
 
 # Introduction
 
+- https://www.sciencedirect.com/science/article/pii/S2352220823000111 : tagabb:
+    - Leirja, hogy a naiv ekvivalencia miert nem eleg
+- https://link.springer.com/chapter/10.1007/978-3-030-57761-2_7
+- https://dl.acm.org/doi/abs/10.1145/3406085.3409008 : legrelevansabb
+- fuggveny eredmenynel mi a helyzet?
+- konkurrens: https://www.diva-portal.org/smash/get/diva2:8988/FULLTEXT01.pdf 3.2.6:
+    - biszimulacio
+
 # Sequential Programs
+
+## Term Equivalence
+
+- Term equivality:
+    - Judgement
+    - Equivalence on normal forms
+- What is function equivalence:
+    - Extensionality
 
 ## Property-Based Testing
 
+There are two different approaches when we are talking about proving program properties: formal proofs and testing.
+While testing is not considered as giving a proof in a strict sense, nevertheless it can still provide some evidence that the properties we want to prove hold, which can be made arbitrarily strong by making the number of test cases higher.
+Testing also has the advantage of requiring less expertise, and being easier to automate.
+
+- Difference between formal verification and testing:
+    - forall -> random probing
 - Proper
 - Property used for checking equivalence
 
@@ -106,6 +128,11 @@ Because we cannot know beforehand if a function will do IO when evaluated, we ha
 # Results
 
 - EquivchekEr
+
+# Future Work
+
+- not only messages, but also signals:
+    - https://www.erlang.org/doc/reference_manual/processes.html
 
 # References
 
