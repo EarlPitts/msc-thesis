@@ -37,8 +37,17 @@ There is also another, more fundamental problem with this naive approach, namely
 Erlang is not a total language, and most erlang applications are non-terminating programs, like web or telecommunication services.
 While it's possible to have a notion of equivalence of functions that do not terminate, due to erlang's ability to have uncontrolled side-effects, we are only considering functions that do in fact terminate, and we also have a constraint on the time it can take before we stop its evaluation.
 
-To avoid these problems, we need some other, more principled way to separate the parts of the program that were effected by the refactoring, and focus only on these.
+To avoid these problems, we need some other, more principled way to separate the parts of the program that were affected by the refactoring, and focus only on these.
 In the literature, this is called *program slicing*.
+We take a subset of the program (the slice), according to some *slicing criterion*, which in our case is everything that in any way was affected by the changes.
+To determine this subset, we use a number of different static analysis tecniques.
+
+First we compare the textual representation of the program to locate all the changes.
+Then we use the source files and the abstract syntax tree to identify each function definition that was altered by the change.
+This subset of functions is the initial slice that we start with.
+These are the functions that were directly affected by the refactoring, but that doesn't mean that we don't have to check other functions.
+
+- callgraph
 
 - Caller/callee
 - Function interface
