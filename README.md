@@ -130,15 +130,40 @@ Because we cannot know beforehand if a function will do IO when evaluated, we ha
 # Parallel Programs
 
 - Erlang message-passing
+- Lightweight processes
+- Actor model
+- Mailboxes
 
 ## Parse Transform
 
-- `Pid ! Msg` -> `Pid ! (print Msg, Msg)`
-- `receive` -> `self() ! RandomData, receive`
+When parallelism and message-passing is taken into consideration, examining the behaviour of some isolated part of a broader system becomes TODO
+Take for example the case of a function that receives a message, and based on its content, does some computation.
+Without the context it depends on, this function will never terminate, because the process will block the first time it tries to read from its empty mailbox.
+Processes can also send messages, and while sending a message always succeeds, even if it will never be received, so non-termination is not a problem, we would ideally take these messages into consideration when deciding if the functions behave the same.
+
+To solve these problems we used a technique called *parse transform*.
+Parse transform allows us to make arbitrary modifications to the program in the compilation phase.
+TODO
+
+To solve the problem of receiving messages, we need to fill up the mailbox, before the process tries to read from it.
+As we did before for function arguments, we can use PropEr again to generate random messages.
+Another important thing to realize is that nothing stops a process from sending messages to itself.
+What we need to do is to modify the function to generate random data with PropEr, send these messages to itself, so it's mailbox won't be empty, and then go on with its original implementation: `receive` -> `self() ! RandomData, receive`.
+TODO wrong kind of data, no match
+
+For solving the problem of sending messages, we can reuse what we already did to capture IO.
+In this way, the only thing needed is to modify the program, so that every time it sends a message, it will also print it to the standard output: `Pid ! Msg` -> `Pid ! (print Msg, Msg)`.
+The group leader that captures the output will take care of this message, so it will be included when the equivalence is checked.
 
 ## Comparison of Messages
 
-- PIDs
+Messages can contain data that can vary based on the context, but we would ideally exclude them when checking equivalence.
+An example for this is the process id (PID).
+Processes often send their PID, so the receiving process knows where to send a reply if needed.
+For our purposes, the PID can be considered as a unique ID, which changes every time the process is created.
+As PIDs are unique, they would make any message containing them differ.
+We solve this problem by traversing each message sent, and replacing any occurrences of PIDs with an atom.
+TODO there could be other similar things, further work needed
 
 # Results
 
