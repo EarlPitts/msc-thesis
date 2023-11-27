@@ -28,6 +28,7 @@
 
 ## Term Equivalence
 
+- Two peer nodes with their own module path
 - Term equivality:
     - Judgement
     - Equivalence on normal forms
@@ -79,6 +80,20 @@ These are the functions that were directly affected by the refactoring, but that
 - On-demand compilation
 
 ## Module Path
+
+When a function is called, the beam first have to find the corresponding bytecode for it.
+It does this by looking for modules that may contain it from a list called the *module path*.
+The module path is an ordered list of directories, where bytecode may reside.
+The beam will always load the first matching module.
+This can lead to problems in the case of modules with the same name, by loading the wrong module.
+An example for this problem would be the case when we try to check the refactoring of some standard library function.
+In this case, we have to make sure that the module in question is loaded before its standard library counterpart.
+
+To achieve this, we have to explicitly set the right module path.
+The `code` module, which is part of the standard library, contains functions that can modify the load path of an already running beam instance.
+
+- Namespace collisions
+- Sticky path
 
 ## Type Inference
 
