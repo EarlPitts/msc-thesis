@@ -69,6 +69,11 @@ First we compare the textual representation of the program to locate all the cha
 Then we use the source files and the abstract syntax tree to identify each function definition that was altered by the change.
 This subset of functions is the initial slice that we start with.
 These are the functions that were directly affected by the refactoring, but that doesn't mean that we don't have to check other functions.
+TODO
+
+Another important feature, for which we unfortunately didn't have the time to implement, would be to compile modules on-demand.
+This would avoid the need to compile the whole project, by only compiling the modules that are tested, right before they are needed.
+This, we think, would result in a considerable improvement in the case of larger codebases, where the number of modules can be in the thousands, but we only need to consider a couple of modules when checking for equivalence.
 
 - callgraph
 
