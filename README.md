@@ -128,6 +128,11 @@ To extend the notion of equivalence to include side-effects, we can keep track o
 To check if the two functions are equivalent, we compare the effects, together with the return value.
 
 Because we cannot know beforehand if a function will do IO when evaluated, we have to treat every function as one that can potentially have side-effects, and observe these effects for the purposes of checking the equivalence.
+We solve this problem by implementing our own *group leader* process, which is responsible for capturing any output.
+The group leader is the process that manages anything IO-related, by receiving and sending messages to other processes.
+Each time a process wants to write to the standard output, an `io_request` message is sent to the group leader, which will process this message, and execute the requested operation.
+It's possible to replace this process with out own, overriding the behaviour of IO.
+TODO sending back the request to the process that does the comparison
 
 - Group leader
 - Catching IO
