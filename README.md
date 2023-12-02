@@ -131,7 +131,7 @@ Because we cannot know beforehand if a function will do IO when evaluated, we ha
 We solve this problem by implementing our own *group leader* process, which is responsible for capturing any output.
 The group leader is the process that manages anything IO-related, by receiving and sending messages to other processes.
 Each time a process wants to write to the standard output, an `io_request` message is sent to the group leader, which will process this message, and execute the requested operation.
-It's possible to replace this process with out own, overriding the behaviour of IO.
+It's possible to replace this process with our own, overriding the behaviour of IO.
 TODO sending back the request to the process that does the comparison
 
 - Group leader
@@ -139,10 +139,21 @@ TODO sending back the request to the process that does the comparison
 
 # Parallel Programs
 
-- Erlang message-passing
-- Lightweight processes
-- Actor model
-- Mailboxes
+Up until this point, we have only considered sequential programs when checking their equivalence.
+Arguably, Erlang's main advantage, compared to other languages is its ability to express massively parallel systems without much effort on the part of the user.
+Compared to most other languages, where language features for expressing concurrency and parallelism were incorporated into the language after the fact, Erlang made these part of the core language from the start.
+The way in which TODO drove design decisions, resulted in simple and elegant ways for TODO
+
+The most prominent result of these decisions is that systems written in Erlang are notoriously robust and highly fault-rolerant.
+
+- Beam:
+    - message-passing, compare it to shared-memory concurrency
+    - Lightweight processes
+    - Actor model
+    - Mailboxes
+
+Because of this ease, with which one can create programs that are highly parallel in their nature, most programs written in Erlang at least some kind of parallel behaviour.
+As our goal is to provide a way to check refactorings of any Erlang program, it was necessary to widen our scope to the language constructs that create these parallel behaviours.
 
 ## Parse Transform
 
