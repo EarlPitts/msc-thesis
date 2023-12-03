@@ -139,18 +139,25 @@ TODO sending back the request to the process that does the comparison
 
 # Parallel Programs
 
-Up until this point, we have only considered sequential programs when checking their equivalence.
+Up until this point, we have only considered sequential programs when checking equivalence.
 Arguably, Erlang's main advantage, compared to other languages is its ability to express massively parallel systems without much effort on the part of the user.
 Compared to most other languages, where language features for expressing concurrency and parallelism were incorporated into the language after the fact, Erlang made these part of the core language from the start.
 The way in which TODO drove design decisions, resulted in simple and elegant ways for TODO
 
-The most prominent result of these decisions is that systems written in Erlang are notoriously robust and highly fault-rolerant.
+The most prominent result of these decisions is that systems written in Erlang are notoriously robust and highly fault-tolerant.
 
-- Beam:
-    - message-passing, compare it to shared-memory concurrency
-    - Lightweight processes
-    - Actor model
-    - Mailboxes
+The Beam, the virtual machine that Erlang programs run on, implements concurrency using the *actor model*.
+In contrast to shared-memory concurrency, where each thread of execution can mutate a shared, global state, actors are not allowed to directly access the memory of other actors.
+Each actor has its own, private memory, and communication between actors is accomplished by *message-passing*.
+(There are some other channels of communication that doesn't make use of message-passing in this sense, TODO.)
+Actors have their own *mailbox*, which can be thought of as a queue, which stores incoming messages.
+Any actor can send a message to another one if it "knows" its unique id.
+
+This compartmentalization of actors to their own memory space makes each computation done by the actor localized, in the sense that actors cannot invalidate some invariant of other actors by accidentally modifying their memory space with incorrect data.
+This independence of actors from eachother is the very reason that makes Erlang programs exceptionally robust.
+If an actor malfunctions, it can simply be restarted, without affecting the other parts of the system.
+
+- Lightweight processes
 
 Because of this ease, with which one can create programs that are highly parallel in their nature, most programs written in Erlang at least some kind of parallel behaviour.
 As our goal is to provide a way to check refactorings of any Erlang program, it was necessary to widen our scope to the language constructs that create these parallel behaviours.
