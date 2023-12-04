@@ -213,8 +213,8 @@ For our purposes, the PID can be considered as a unique ID, which changes every 
 As PIDs are unique, they would make any message containing them differ.
 We solve this problem by traversing each message sent, and replacing any occurrences of PIDs with an atom.
 
-
-TODO there could be other similar things, further work needed
+Although we provided a solution in the case of process IDs, there could be other kinds context-dependent data, that can be considered irrelevant for the purposes of equivalence checking.
+The present thesis TODO, so futher work is needed to identify any other TODO
 
 # Results
 
