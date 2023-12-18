@@ -200,19 +200,24 @@ Parse transformations can be invoked using the `-compile({parse_transform, Modul
 
 When the `parse_transform` option is specified, the compiler will first parse the source code, then it uses the specified module to do the transformation, and it compiles the newly created AST to bytecode.
 
-An example for a simple parse transformation that modifies the original code to also print out the name and arity of all invoked functions can be seen here:
+An example for a simple parse transformation that modifies the original code by adding a new clause to every function, can be seen here:
 
-\lstset{caption={Example parse transformation, printing function name and arity}, label=src:erlang}
+\lstset{caption={Example parse transformation, adding a clause to functions}, label=src:erlang}
 \begin{lstlisting}[language={Erlang}]
--module(print_function_names).
+-module(add_clause).
 -export([parse_transform/2]).
 
 parse_transform(Forms, _Options) ->
-   lists:map(fun print_function_name/1, Forms).
+   lists:map(fun add_clause/1, Forms).
 
-print_function_name({function, Line, Name, Arity, Clauses}) ->
-   io:format("Function: ~p/~p~n", [Name, Arity]),
-   {function, Line, Name, Arity, Clauses};
-print_function_name(Other) ->
+add_clause({function, Line, Name, Arity, Clauses}) ->
+   NewClauses = Clauses ++ [{clause, Line, [], [], [{atom, Line, ok}]}],
+   {function, Line, Name, Arity, NewClauses};
+add_clause(Other) ->
    Other.
 \end{lstlisting}
+
+The added clause matches any input, and gives back the atom `ok`.
+This transformation will recursively traverse the whole AST, and apply the `add_clause/1` function for each term in it.
+If the given term represents a function, then the new clause is added by appending it to the end of the original ones.
+In every other case the term is returned without any modification.
