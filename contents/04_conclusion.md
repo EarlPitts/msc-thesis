@@ -10,6 +10,9 @@ We tried to provide sane default configurations, but enable the user to change t
 In addition to the command-line tool that constitutes the majority of EquivcheckEr, we created an interface for it inside the Visual Studio Code (VSCode) $\cite{vscode}$ editor.
 In this way, it's possible to use EquivcheckEr during the development phase by running it inside the editor, but it can also be part of automated software pipelines, increasing software quality standards.
 
+It's also important to mention that EquivcheckEr can work on any two versions of a program, it doesn't matter if the refactoring was made by hand or by some tool.
+Only the source code is used to determine if the two versions are equivalent, no additional information is needed from other tools.
+
 Our hope is that EquivcheckEr will be adopted by the Erlang community, and it will be integrated seamlessly into the workflow of Erlang developers.
 
 ## EquivcheckEr

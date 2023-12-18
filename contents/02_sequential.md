@@ -22,8 +22,7 @@ There is also another, more fundamental problem with this naive approach, namely
 Erlang is not a total language, and most Erlang applications are non-terminating programs, like web or telecommunication services.
 
 While in the case of terminating functions it's easy to check their return values and their effects on the environment when deciding if they are equivalent, in the case of functions that do not terminate, our only option is to examine their effects before we eventually stop their evaluation.
-In this way, it's possible to prove their nonequivalence in a finite amount of time, but
-establising their equivalence is theoretically impossible, because their behaviour could differ at any point in time, so we can never stop the comparison.
+In this way, it's possible to prove their nonequivalence in a finite amount of time, but establising their equivalence is theoretically impossible, because their behaviour could differ at any point in time, so we can never stop the comparison.
 
 To avoid these problems, we need some other, more principled way to separate the parts of the program that were affected by the refactoring, and focus only on these, and we also need some way to deal with non-termination.
 The latter we solved simply by imposing a time limit, after which we stop the evaluation of the function, and conclude that we don't have enough information to decide if they are equivalent or not.
@@ -86,7 +85,7 @@ The module path is an ordered list of directories, where bytecode may reside.
 The BEAM will always load the first matching module.
 
 By modifying the module path, we can control the way in which a node finds the modules to run.
-This is how we assure that each node executes the right version of the program.
+This is how we assure that each node executes the right version of the program (see $\ref{semantic-equivalence-property}$ for more details on how the nodes are used).
 
 To achieve this, we have to explicitly set the right module path.
 The `code` module, which is part of the standard library, contains functions that can modify the load path of an already running BEAM instance.
@@ -106,6 +105,7 @@ An issue for further investigation was promptly created.*)
 Erlang is a dynamically typed language, meaning that the types of values are only known at runtime.
 It also supports type annotations, provided by the user, but as the Erlang runtime has no type checking in itself, and nothing enforces correct annotations, these are frequently omitted.
 Preferably, we would like to know the type of data a specific function accepts, so we can generate input that will result in normal values.
+This would make our method more efficient by avoiding unnecessary comparisons.
 Randomly generating arguments usually leads to runtime errors (type mismatch, pattern matching failing, etc...), which, although it can indicate nonequivalence, is most of the time not enough information to make a definitive decision.
 
 Erlang doesn't forbid defining partial functions (it couldn't check partialness even in principle, due to its dynamic typing), so it's possible to define functions that can handle only a few elements of their domain, resulting in runtime errors otherwise.
