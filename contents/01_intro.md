@@ -4,11 +4,6 @@ Refactorings are program transformations that preserve the semantic meaning of t
 The purpose of refactorings is to improve the structure of already existing source code, based on some criteria (usually readability).
 This thesis presents a way for checking if refactorings do in fact preserve the functional equivalence of programs before and after some refactoring transformation, without introducing bugs.
 We also provide an implementation with some promising results, although more work is needed for it to be used in real-world applications.
-The thesis starts by describing the basic problems we tried to solve.
-Then a general overview of the various techniques and tools used is given.
-Then we elaborate on our approach for testing the equivalence of refactored programs, which consists of two main parts: equivalence of sequential and concurrent programs.
-This partitioning is due to the fact that introducing concurrency into the programs in question leads to whole new set of problems related to functional equivalence.
-We close by summarizing our results, discussing how we evaluated our implementation, and give recommendations for further work.
 
 ## Motivation
 
@@ -24,16 +19,24 @@ In the worst case, it's possible that the test-suite takes a significant amount 
 What would be ideal is some more sensible way that specifically targets code that was changed (either directly or indirectly) by the refactoring, and automatically tests these parts with generated data.
 This "more sensible way" is what the present thesis tries to elaborate on.
 
-## Background
+## Outline
 
-### Erlang
+The thesis starts by describing the basic problems we tried to solve.
+Then a general overview of the various techniques and tools used is given.
+Then we elaborate on our approach for testing the equivalence of refactored programs, which consists of two main parts: equivalence of sequential and concurrent programs.
+This partitioning is due to the fact that introducing concurrency into the programs in question leads to whole new set of problems related to functional equivalence.
+We close by summarizing our results, discussing how we evaluated our implementation, and give recommendations for further work.
+
+# Background
+
+## Erlang
 
 Erlang $\cite{erlang}$ is a functional, strict, dynamically typed, general-purpose programming language.
 It was developed by Ericsson, specifically for implementing telecommunication services.
 As telecommunication services require high levels of fault-tolerancy, hot-swapping (replacing code in running systems), and distributed systems, Erlang took these traits, and incorporated them into its core design.
 For the purposes of this thesis, what turned out to be the main difficulty was Erlang's dynamic type-system, as we will see later.
 
-### Refactoring
+## Refactoring
 
 "Refactoring is the process of changing a software system in such a way that it does not alter the
 external behavior of the code yet improves its internal structure. It is a disciplined way to clean up
@@ -77,7 +80,7 @@ The semantic graph is basically the Abstract Syntax Tree (AST) of the program, a
 After the semantic graph is created, Wrangler checks the side-conditions to see if the requested refactoring is possible.
 If it is, the refactoring is applied to the semantic graph, which is then translated back to the AST, and the original source is replaced by the refactored one.
 
-### Semantic Equivalence
+## Semantic Equivalence
 
 Semantic equivalence is a relation between two programs, that expresses whether they behave in the same way when executed in the same context.
 (Although it's important to note that this notion of equivalence completely ignores the question of efficiency, which can be easily seen by considering optimizations, which themselves are a form of program transformation that preserve semantic equivalence. TODO Here I wanted to say something to the effect of optimiziations are a good example for transformations where efficiency *is* important)
@@ -131,7 +134,7 @@ After the nodes executed the functions, the results are sent to a third node, wh
 	\label{fig:example-1}
 \end{figure}
 
-### Property-Based Testing
+## Property-Based Testing
 
 There are two different approaches when we are talking about proving program properties: formal proofs and testing.
 While testing is not considered as giving a proof in a strict sense, nevertheless it can still provide some evidence that the properties we want to prove hold, which can be made arbitrarily strong by making the number of test cases higher.
@@ -161,7 +164,7 @@ In this example, we use the `list(int())` generator to randomly generate lists o
 PropEr generates 100 cases by default (if no counterexample is found sooner), but this behaviour can be modified.
 When an example is found, for which the property doesn't hold, PropEr first tries to *shrink* the counterexample, meaning that it attempts to reduce the counterexample it found to the most trivial one that still invalidates the given property.
 
-### Slicing
+## Slicing
 
 The technique of taking some subset of a program, based on some property we are interested in, is called *program slicing* $\cite{slicing}$ in the literature.
 It has multiple applications in the context of static analysis, where it can be used for dependency analysis, dead code elimination or program optimization, among other things.
@@ -190,7 +193,7 @@ If we select the criterion to be the transitive closure of the relation of calli
 
 The function `i` and `j` are not in this slice, because they don't call `h`, or any other function that transitively calls `h`.
 
-### Parse Transformation
+## Parse Transformation
 
 Parse transformation is a feature of the Erlang compiler, which allows the user to apply arbitrary transformations to the AST in the compilation phase, as long as the resulting AST consists of valid Erlang syntax.
 Parse transformations can be invoked using the `-compile({parse_transform, Module})` compiler option, where `Module` is the module where the parse transformation is implemented.
