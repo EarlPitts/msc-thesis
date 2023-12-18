@@ -177,7 +177,7 @@ Unfortunately, all of these functions were internal, not exported from the modul
 Most of these problems resulted from discrepancies between the way `regexp` and `re` handle erroneous inputs.
 While `regexp` usually gave back some value even for meaningless input, `re` threw an error in these cases, making their behaviour differ.
 
-We also found that running the tool on repositories like OTP, which consists of many other subrepositores, can ofthen cause problems, like includes not being found.
+We also found that running the tool on repositories like OTP, which consists of many other subrepositores, can often cause problems, like includes not being found.
 Although it's important to mention that OTP is somewhat of an outlier in this regard, not resembling the average Erlang project structure of a single repository.
 
 We also found that running the tool on projects as large as OTP necessitates the use of on-demand compilation, alluded to in earlier sections, without which its necessary to compile the whole codebase twice before the checking could start, once for each version.
