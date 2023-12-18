@@ -119,20 +119,6 @@ Not all functions terminate, and this is especially true in the context of distr
 How should we check the equivalence of functions that don't have return values we can compare?
 
 There are cases where this approach can decide that two functions are equivalent (e.g.: functions with a finite domain, like a single boolean value), but generally we can only say that we failed to show otherwise.
-TODO
-
-Equivalence can be shown in this way by taking the original and the refactored function, evaluating them in the same environment (or an environment that's as close to being the same as possible), and comparing their effects and return values.
-We do this by setting up two Erlang nodes, i.e. separate instances of Erlang runtime systems, each responsible for executing parts of the original or the refactored program.
-We do this in a way that each node can only see the modules for the version of the program it executes (see $\ref{module-path}$).
-We also modify the programs for the purposes of setting up the environment we can observe them in (see $\ref{setting-up-the-context}$).
-After the nodes executed the functions, the results are sent to a third node, which compares them, and sends the new parameters if necessary.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\textwidth,height=500px]{architecture}
-	\caption{Nodes used for testing}
-	\label{fig:example-1}
-\end{figure}
 
 ## Property-Based Testing
 
