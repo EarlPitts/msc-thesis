@@ -83,7 +83,7 @@ If it is, the refactoring is applied to the semantic graph, which is then transl
 ## Semantic Equivalence
 
 Semantic equivalence is a relation between two programs, that expresses whether they behave in the same way when executed in the same context.
-(Although it's important to note that this notion of equivalence completely ignores the question of efficiency, which can be easily seen by considering optimizations, which themselves are a form of program transformation that preserve semantic equivalence. TODO Here I wanted to say something to the effect of optimiziations are a good example for transformations where efficiency *is* important)
+(Although it's important to note that this notion of equivalence completely ignores the question of efficiency, which can be easily seen by considering optimizations, which themselves are a form of program transformation that preserve semantic equivalence.)
 The semantic equivalence of two programs can be established by considering their output for each input in given context.
 For pure functions (meaning subroutines without side-effects), this property is precisely the one of *eta-equivalence* of functions.
 For functions with side-effects, we also have to check if any external-facing effects done by the two functions are the same.
