@@ -173,8 +173,14 @@ The subset of the program is called the *slice*, and the property is usually cal
 One such criterion, that is relevant for our purposes, is the one that selects a path from the *callgraph* of the program.
 The callgraph is a directed graph, where each node represents a function, and the edges between nodes indicate a caller/callee relation, where the edge points from the caller to the callee.
 
-Take for example the following program:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth,height=300px]{callgraph}
+	\caption{A callgraph (nodes represent functions, edges represent calling relationships)}
+	\label{fig:example-2}
+\end{figure}
 
+Take for example the following program:
 
 \lstset{caption={Example caller/callee relations}, label=src:erlang}
 \begin{lstlisting}[language={Erlang}]
