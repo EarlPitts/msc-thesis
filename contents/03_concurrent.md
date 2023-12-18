@@ -46,6 +46,11 @@ As we did before for function arguments, we can use PropEr again to generate ran
 Another important thing to realize is that nothing stops a process from sending messages to itself.
 We can use this fact to our advantage, and modify the function to generate random data with PropEr, send these messages to itself, so it's mailbox won't be empty, and then go on with its original implementation: $\lstinline{receive} \rightarrow \lstinline{self() ! RandomData, receive}$.
 
+It's also important that the two functions get the same messages put into their mailbox before they are evaluated.
+The default behaviour of PropEr is to generate random data by first seeding the generator with a timestamp taken from the operating system.
+This seed can also be specified in the form of a function argument.
+By using the same seed when generating data for filling up the mailboxes, we can make sure that the functions will receive the same messages in the same order.
+
 While this method can work, it doesn't cover all the possibilities.
 When a process tries to read from its mailbox, it can optionally match on the structure of the message, and guards can also be used to decide if a message will be consumed or not.
 
