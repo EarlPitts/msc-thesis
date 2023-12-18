@@ -120,7 +120,7 @@ This made the checks run much faster, making the tool more usable overall.
 
 As the last step, we wanted to test the tool on a large codebase, using a known refactoring.
 We chose the reworking of the `regexp` module in the standard library, containing regular expression related functions, as our target.
-The `regexp` module was replaced by `re`, while `regexp` itself was deprecated, and later removed from the standard library.
+The `regexp` module was replaced by `re` in OTP R13, while `regexp` itself was deprecated, and later removed from the standard library.
 
 This necessitated the replacement of the usage of the module `regexp` by `re` everywhere it was used in the standard library.
 The API of `re` remained similar, although it had some easy-to-miss changes, like changing the way indexing workes (starting from 0 instead of 1).
