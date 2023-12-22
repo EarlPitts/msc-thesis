@@ -4,7 +4,7 @@ The main result of this thesis is an open-source tool, which we named Equivcheck
 This tool can still be considered as a proof-of-concept, and more work is needed for it to be feasible in practice, but it already shows promising results.
 
 As one of the main goals of this project was to provide a tool that can be adopted by the Erlang community, we had to make sure that its usage is sufficiently straightforward from a user's point of view.
-In accordance with this, with made sure that the tool has a low barrier of entry, and can be used by non-experts.
+In accordance with this, we made sure that the tool has a low barrier of entry, and can be used by non-experts.
 We tried to provide sane default configurations, but enable the user to change these if needed.
 
 In addition to the command-line tool that constitutes the majority of EquivcheckEr, we created an interface for it inside the Visual Studio Code (VSCode) $\cite{vscode}$ editor.
@@ -70,7 +70,7 @@ The default mode, which gets invoked when no source and target is specified, is 
 
 There are also two options that modify the output: `--json` and `--statistics`.
 
-When the `--statistics` flag is used, the output will also contain information about the number of failed check and the average number of tests needed before finding a counterexample.
+When the `--statistics` flag is used, the output will also contain information about the number of failed checks and the average number of tests needed before finding a counterexample.
 
 \begin{figure}[H]
 	\centering
@@ -112,7 +112,7 @@ After installing the extension, a button for EquivcheckEr will appear in the sta
 
 When the user clicks the button, EquivcheckEr will be started as an external process.
 For now, only the default behaviour of the CLI tool is supported, which compares the current state of the working directory to the latest commit in version control.
-An notification will also be displayed to the user, indicating that the equivalence checking has started:
+A notification will also be displayed to the user, indicating that the equivalence checking has started:
 
 \begin{figure}[H]
 	\centering
@@ -139,7 +139,7 @@ The tool currently has rudimentary configuration capabilities.
 It tries to locate the configuration file inside the `XDG_CONFIG_HOME` folder, as specified by freedesktop.org $\cite{freedesktop}$.
 This currently limits usage to UNIX-like systems, where the XDG Base Directory Specification is used.
 
-At time of writing this theses, the only configurable option is the location of the persistent lookup table, used for type inference.
+At time of writing this thesis, the only configurable option is the location of the persistent lookup table, used for type inference.
 Normally the tool uses the default location of the PLT, but if needed, the user can override this behaviour by specifying a custom location for it.
 
 # Evaluation
@@ -237,13 +237,13 @@ Although the tool is in a working state now, that doesn't mean it's also easy to
 There is still a lot of work to be done before it can be considered user-friendly.
 This chapter is a collection of improvements we think would make EquivcheckEr better, each with a short summary of the details.
 
-The project has an issue tracker, which can be found on $\href{https://github.com/harp-project/EquivcheckEr/issues}{GitHub}.
+The project has an issue tracker, which can be found on $\href{https://github.com/harp-project/EquivcheckEr/issues}{GitHub}$.
 Some of these items are already present as bugreports or feature requests on it.
 
 ## Packaging
 
 Currently the source code is on GitHub, and it requires manual compilation.
-For easier access, the software will need to be packaged, and these packages will need to be made public where people can download and install them.
+For easier access, the software will need to be packaged, and these packages will need to be uploaded to a publicly availabe platform, where people can download and install them.
 There is also a general lack of documentation that needs to be addressed.
 The editor integration will also need to be made available, preferably somewhere visible, like the Visual Studio Code Marketplace.
 
@@ -254,7 +254,7 @@ While this provides all the necessary information for the user, it's not hard to
 One such way could be to use VSCode's already existing Git integration to show the user a spit view of the diff, where they can see all of the problematic changes.
 
 Another useful feature would be to show that a function has failed the tests, and the counterexamples found in a tooltip if the user hover above it with the cursor.
-Functions that failed the check could also be underlined, or indicated by some visual mean, so the user would know where the problem is while looking at the source code itself.
+Functions that failed the check could also be underlined, or indicated by some visual means, so the user would know where the problem is while looking at the source code itself.
 
 ## Customization
 

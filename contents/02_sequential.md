@@ -69,7 +69,7 @@ We refactor this code by renaming `f` to `i`, but we forget to accommodate this 
 This change doesn't affect the behaviour of `f` (or now `i`), but running the program after this refactoring would probably lead to unwanted behaviour.
 
 To get the callers of a function, we use Wrangler, which can generate the whole callgraph for a given codebase.
-The callgraph represents the caller/callee relations between the functions in program.
+The callgraph represents the caller/callee relations between the functions in the program.
 
 Its possible that some callers also have their signature changed.
 In this case, we iteratively expand the set of functions to test.

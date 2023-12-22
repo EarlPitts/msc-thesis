@@ -24,7 +24,7 @@ This "more sensible way" is what the present thesis tries to elaborate on.
 The thesis starts by describing the basic problems we tried to solve.
 Then a general overview of the various techniques and tools used is given.
 Then we elaborate on our approach for testing the equivalence of refactored programs, which consists of two main parts: equivalence of sequential and concurrent programs.
-This partitioning is due to the fact that introducing concurrency into the programs in question leads to whole new set of problems related to functional equivalence.
+This partitioning is due to the fact that introducing concurrency into the programs in question leads to a whole new set of problems related to functional equivalence.
 We close by summarizing our results, discussing how we evaluated our implementation, and give recommendations for further work.
 
 # Background
