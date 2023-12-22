@@ -34,30 +34,57 @@ The main way to use EquivcheckEr is through its command-line interface, but we a
 
 The currently supported options can be seen in the generated help text:
 
-TODO  Pics
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{help}
+\end{figure}
 
 As one of our main goals was to make the tool user-friendly, we prioritized integration with other tools used by most software developers, so new users wouldn't be expected to fundamentally change their familiar workflows.
 In accordance with this, EquivcheckEr is aware of existing Git $\cite{git}$ source repositories.
 This makes it possible to compare different versions of the same codebase using the commits made in Git.
 Commits can be specified using the `--commit` flag.
 
-TODO Pics
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{commit-long}
+\end{figure}
 
 It's also possible to compare folders containing the source code when the flag is omitted, or mix the two methods (i.e.: compare a commit made in a respository to a folder).
 
-TODO Pics
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{folder}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{commitfolder}
+\end{figure}
 
 The default mode, which gets invoked when no source and target is specified, is to compare the current folder with the latest commit (assuming the current folder is also a Git repository).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{default}
+\end{figure}
 
 There are also two options that modify the output: `--json` and `--statistics`.
 
 When the `--statistics` flag is used, the output will also contain information about the number of failed check and the average number of tests needed before finding a counterexample.
 
-- TODO Pics
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{stats}
+\end{figure}
 
 When the `--json` flag is used, EquivcheckEr will format its output as JSON.
 This can be useful in the case automation, when the output will be consumed by other programs.
 This is also what we used for providing the Visual Studio Code interface, that we will now describe.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{json}
+\end{figure}
 
 After running the tool with valid parameters, the output will contain all the functions that it found to be semantically different after the refactoring, if any.
 It also provides the counterexamples for each.
@@ -78,24 +105,38 @@ The EquivcheckEr VSCode integration is currently in a very early phase, and not 
 
 After installing the extension, a button for EquivcheckEr will appear in the statusbar:
 
-TODO Picture of the button
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{button.png}
+\end{figure}
 
 When the user clicks the button, EquivcheckEr will be started as an external process.
-Fow now, only the default behaviour of the CLI tool is supported, which compares the current state of the working directory to the latest commit in version control.
+For now, only the default behaviour of the CLI tool is supported, which compares the current state of the working directory to the latest commit in version control.
 An notification will also be displayed to the user, indicating that the equivalence checking has started:
 
-TODO Picture of the notification
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{notification}
+\end{figure}
 
 When the checking is finished, the output of the process, formatted as JSON, is parsed and presented to the user in a new window as a simple Markdown text buffer:
 
-TODO Picture of the output
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{results}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{success}
+\end{figure}
 
 Although the specifics of this behaviour is subject to change, the basic workflow will probably remain the same, only with more customizability.
 
 ### Configuration
 
 The tool currently has rudimentary configuration capabilities.
-It tries to locate the configuration file inside the `XDG_CONFIG_HOME` folder, as speficied by freedesktop.org $\cite{freedesktop}$.
+It tries to locate the configuration file inside the `XDG_CONFIG_HOME` folder, as specified by freedesktop.org $\cite{freedesktop}$.
 This currently limits usage to UNIX-like systems, where the XDG Base Directory Specification is used.
 
 At time of writing this theses, the only configurable option is the location of the persistent lookup table, used for type inference.
@@ -126,7 +167,7 @@ We chose the reworking of the `regexp` module in the standard library, containin
 The `regexp` module was replaced by `re` in OTP R13, while `regexp` itself was deprecated, and later removed from the standard library.
 
 This necessitated the replacement of the usage of the module `regexp` by `re` everywhere it was used in the standard library.
-The API of `re` remained similar, although it had some easy-to-miss changes, like changing the way indexing workes (starting from 0 instead of 1).
+The API of `re` remained similar, although it had some easy-to-miss changes, like changing the way indexing works (starting from 0 instead of 1).
 Even so, upgrading to the newer module usually meant a simple refactoring, replacing a function used from the `regexp` module with a function having the same or similar name, but coming from `re` instead, with some slight modifications.
 
 An example of such refactoring, taken from the `xref_utils` module, can be seen here:
@@ -180,7 +221,7 @@ Unfortunately, all of these functions were internal, not exported from the modul
 Most of these problems resulted from discrepancies between the way `regexp` and `re` handle erroneous inputs.
 While `regexp` usually gave back some value even for meaningless input, `re` threw an error in these cases, making their behaviour differ.
 
-We also found that running the tool on repositories like OTP, which consists of many other subrepositores, can often cause problems, like includes not being found.
+We also found that running the tool on repositories like OTP, which consists of many other subrepositories, can often cause problems, like includes not being found.
 Although it's important to mention that OTP is somewhat of an outlier in this regard, not resembling the average Erlang project structure of a single repository.
 
 We also found that running the tool on projects as large as OTP necessitates the use of on-demand compilation, alluded to in earlier sections, without which its necessary to compile the whole codebase twice before the checking could start, once for each version.
