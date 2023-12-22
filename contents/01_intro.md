@@ -1,7 +1,7 @@
 # Introduction
 
 Refactorings are program transformations that preserve the semantic meaning of the original program.
-The purpose of refactorings is to improve the structure of already existing source code, based on some criteria (usually readability).
+The purpose of refactoring is to improve the structure of already existing source code, based on some criteria (usually readability).
 This thesis presents a way for checking if refactorings do in fact preserve the functional equivalence of programs before and after some refactoring transformation, without introducing bugs.
 We also provide an implementation with some promising results, although more work is needed for it to be used in real-world applications.
 
@@ -12,7 +12,7 @@ Manual refactoring is usually a tedious and error-prone process, and there is a 
 It's also very mechanical in its nature, and it's this property of being relatively easy to automate in most cases is what refactoring software tools take advantage of.
 Unfortunately these tools can also have bugs, leading to incorrect refactorings, and they are also constrained in the set of available refactorings that can be done by them.
 For transformations that are unsupported by these tools, manual refactoring is our only option.
-For these reasons, it would be nice to have some way for checking if the refactoring was correct, in a sense that no bugs were introduced (or removed) by the refactoring, and two programs (the original and the refactored one) are funcionally equivalent.
+For these reasons, it would be nice to have some way for checking if the refactoring was correct, in a sense that no bugs were introduced (or removed) by the refactoring, and two programs (the original and the refactored one) are functionally equivalent.
 In real-world software development projects, this is usually done by running some already existing test-suite, hoping that it will catch any new errors introduced by the refactoring.
 Although this could seem at first as a reasonable way to deal with this problem, it's not perfect for two reasons: test coverage for most software application is not complete, meaning that we can't guarantee that the relevant parts of the codebase will be exercised by the test-suite, and running all tests for some localized refactoring can be extremely inefficient (e.g.: renaming a single local variable).
 In the worst case, it's possible that the test-suite takes a significant amount of time and resources to execute, while completely missing the parts of the program that were affected by the refactoring.
@@ -90,7 +90,7 @@ For functions with side-effects, we also have to check if any external-facing ef
 Erlang is not a pure language, and it's easy to have arbitrary side-effects anywhere in the program.
 
 Rice's theorem states that all non-trivial semantic properties of programs are undecidable.
-Unfortunately, semantic equivalence is far from being trivial, so it's also generally undecideable.
+Unfortunately, semantic equivalence is far from being trivial, so it's also generally undecidable.
 To get around this problem, we have two options: either we only consider cases where semantic equivalence can be decided, and thus formally proved, or we approximate by running a large number of tests, and try to prove that the two programs are nonequivalent.
 Our approach focused on the latter one.
 
