@@ -18,13 +18,13 @@ This independence of actors from each other is the very reason that makes Erlang
 If an actor malfunctions, it can simply be restarted, without affecting the other parts of the system.
 
 It's also important to mention that unlike most other runtimes that use the operating system to create new threads, the BEAM has its own scheduler, and it creates its own processes.
-These lightweight processes have much smaller overhead and memory footprint compared to OS threads, and its not uncommon for applications running on the BEAM to have thousands or even hundreds of thousands processes running concurrently.
+These lightweight processes have much smaller overhead and memory footprint compared to OS threads, and its not uncommon for applications running on the BEAM to have thousands or even hundreds of thousands of processes running concurrently.
 This level of concurrency would not only be extremely hard to manage with shared-memory, but due to the need of locking, it would also be very inefficient.
 
 Because of this ease, with which one can create programs that are highly concurrent in their nature, most programs written in Erlang at least some kind of concurrent behaviour.
 As our goal is to provide a way to check refactorings of any Erlang program, it was necessary to widen our scope to the language constructs that create these concurrent behaviours.
 
-This chapter first describes how we used parse transformation, introduced in $\ref{parse-transform}$, to create the necessary context that processes expect.
+This chapter first describes how we used parse transformation, introduced in $\ref{parse-transformation}$, to create the necessary context that processes expect.
 Then we go over some problems related to certain types of messages being slightly different based on the sending process, and our proposed solution for these issues.
 
 ## Setting Up The Context
@@ -32,7 +32,7 @@ Then we go over some problems related to certain types of messages being slightl
 When concurrency and message-passing is taken into consideration, examining the behaviour of some isolated part of a broader system becomes insufficient.
 Take for example the case of a function that receives a message, and based on its content, does some computation.
 Without the context it depends on, this function will never terminate, because the process will block the first time it tries to read from its empty mailbox.
-Processes can also send messages, and while sending a message always succeeds, even if it will never be received, so non-termination is not a problem, we would ideally take these messages into consideration when deciding if the functions behaves the same.
+Processes can also send messages, and while sending a message always succeeds, even if it will never be received, so non-termination is not a problem, we would ideally take these messages into consideration when deciding if the functions behave the same.
 
 To solve these problems we used a technique called *parse transform* (see $\ref{parse-transformation}$).
 Parse transformation allows us to make arbitrary modifications to the program in the compilation phase.
@@ -45,6 +45,11 @@ For receiving messages, we need the mailbox to already contain some messages, so
 As we did before for function arguments, we can use PropEr again to generate random messages.
 Another important thing to realize is that nothing stops a process from sending messages to itself.
 We can use this fact to our advantage, and modify the function to generate random data with PropEr, send these messages to itself, so it's mailbox won't be empty, and then go on with its original implementation: $\lstinline{receive} \rightarrow \lstinline{self() ! RandomData, receive}$.
+
+It's also important that the two functions get the same messages put into their mailbox before they are evaluated.
+The default behaviour of PropEr is to generate random data by first seeding the generator with a timestamp taken from the operating system.
+This seed can also be specified in the form of a function argument.
+By using the same seed when generating data for filling up the mailboxes, we can make sure that the functions will receive the same messages in the same order.
 
 While this method can work, it doesn't cover all the possibilities.
 When a process tries to read from its mailbox, it can optionally match on the structure of the message, and guards can also be used to decide if a message will be consumed or not.
