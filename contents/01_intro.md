@@ -21,13 +21,21 @@ This "more sensible way" is what the present thesis tries to elaborate on.
 
 ## Outline
 
-The thesis starts by describing the basic problems we tried to solve.
-Then a general overview of the various techniques and tools used is given.
-Then we elaborate on our approach for testing the equivalence of refactored programs, which consists of two main parts: equivalence of sequential and concurrent programs.
+Chapter $\ref{background}$ contains a general overview of the various techniques and tools used.
+In Chapter $\ref{sequential-programs}$, we elaborate on our approach for testing the equivalence of refactored programs that contain no language features related to concurrency.
+Then in Chapter $\ref{concurrent-programs}$, we extend the range of refactored programs to also include ones with concurrent features.
 This partitioning is due to the fact that introducing concurrency into the programs in question leads to a whole new set of problems related to functional equivalence.
-We close by summarizing our results, discussing how we evaluated our implementation, and give recommendations for further work.
+We close by summarizing our results in Chapter $\ref{results}$, discussing how we evaluated our implementation in Chapter $\ref{evaluation}$, and in Chapter $\ref{future-work}$, we give some recommendations for further work.
 
 # Background
+
+The aim of this chapter is to familiarize the reader with the different tools and techniques used.
+Section $\ref{erlang}$ describes Erlang.
+Section $\ref{refactoring}$ is about the concept of refactoring, it's relation to other kinds of program transformations, and it's main properties.
+In section $\ref{semantic-equivalence}$, we define what we mean by program equivalence.
+Section $\ref{property-based-testing}$ introduces property-based testing and PropEr, a testing tool based on these principles.
+Section $\ref{slicing}$ describes program slicing by giving a simple example of it.
+Section $\ref{parse-transformation}$ is about an Erlang specific feature called parse transformation.
 
 ## Erlang
 
